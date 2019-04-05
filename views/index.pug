@@ -4,8 +4,13 @@ block content
   h1= title
   p Welcome to #{title}
   ul
-    li GET /data
-    li GET /data/:id
-    li POST /data
-    li PUT /data
-    li DELETE /data
+    li 
+      a(href='/data') GET /data
+    li 
+      a(href='/data/1') GET /data/:id
+    li 
+      a(href='/data') POST /data
+    li 
+      a(href='/data') PUT /data
+    li 
+      a(href='/data') DELETE /data
