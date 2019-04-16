@@ -1,3 +1,4 @@
 # run it
 
-SET DEBU=restfull-api:* & npm start
+* SET DEBU=restfull-api:* 
+*  npm start
