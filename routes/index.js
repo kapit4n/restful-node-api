@@ -13,7 +13,10 @@ images = [
   'https://bdc.autobild.es/sites/default/files/styles/body_768/public/dc/fotos/Suzuki-Vitara_2015_C02.jpg?itok=pLJtcNSN',
   'https://www.autobild.es/sites/autobild.es/public/styles/main_element/public/dc/fotos/Suzuki-Vitara_2015_C01.jpg?itok=hKQcOsjl',
   'https://img.automexico.com/crop/840x640/2020/04/02/J6j0rGhV/general-vitara-1-c34f.jpg',
-  'https://avtotachki.com/wp-content/uploads/2020/06/suzuki-vitara-2018-66.png'
+  'https://avtotachki.com/wp-content/uploads/2020/06/suzuki-vitara-2018-66.png',
+  'https://cdn.motor1.com/images/mgl/9Brzb/s1/2016-suzuki-vitara-s1.jpg',
+  'https://www.globalsuzuki.com/automobile/lineup/vitara/img/slide/key_img06.jpg',
+  'https://i0.wp.com/changinglanes.ie/wp-content/uploads/2020/12/IMG_2116.jpg?fit=1620%2C1080&ssl=1'
 ]
 
 var allData = [];
@@ -42,7 +45,7 @@ filterValues['name'] = [...Array(10).keys()].map(x => "Customer " + (x));
 
 router.get('/data/', function (req, res, next) {
 
-  let top = req.query.$top ? parseInt(req.query.$top) : 10;
+  let top = req.query.$top ? parseInt(req.query.$top) : 20;
   let skip = req.query.$skip ? parseInt(req.query.$skip) : 0;
 
   let filter = req.query.$filter;
