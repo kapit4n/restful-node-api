@@ -8,30 +8,41 @@ router.get('/', function (req, res, next) {
   });
 });
 
+
+images = [
+  'https://bdc.autobild.es/sites/default/files/styles/body_768/public/dc/fotos/Suzuki-Vitara_2015_C02.jpg?itok=pLJtcNSN',
+  'https://www.autobild.es/sites/autobild.es/public/styles/main_element/public/dc/fotos/Suzuki-Vitara_2015_C01.jpg?itok=hKQcOsjl',
+  'https://img.automexico.com/crop/840x640/2020/04/02/J6j0rGhV/general-vitara-1-c34f.jpg',
+  'https://avtotachki.com/wp-content/uploads/2020/06/suzuki-vitara-2018-66.png'
+]
+
 var allData = [];
 var allDataCount = 1000;
 for (let i = 0; i < allDataCount; i++) {
-  let nextNumber = i  % 10;
-  let nextCodeNumber = i  % 7;
-  let nextAddressNumber = i  % 8;
+  let nextNumber = i % 10;
+  let nextCodeNumber = i % 7;
+  let nextAddressNumber = i % 8;
   let nextValue = {
     id: i,
-    name: "Customer " + nextNumber,
-    code: "cd - " + (100 + nextCodeNumber ),
+    name: "Car " + nextNumber,
+    code: "cd - " + (100 + nextCodeNumber),
     address: "Bolivia, Am St " + nextAddressNumber,
-    budget: 10 * i
+    budget: 10 * i,
+    img: images[i%images.length],
+    price: (i * 1790) % 25000,
+    description: 'description'
   };
   allData.push(nextValue);
 }
 
 var filterValues = {};
-filterValues['code'] = [...Array(7).keys()].map(x => "cd - " + (100 + x) );
-filterValues['address'] = [...Array(8).keys()].map(x => "Bolivia, Am St " + x );
-filterValues['name'] = [...Array(10).keys()].map(x => "Customer " + (x) );
+filterValues['code'] = [...Array(7).keys()].map(x => "cd - " + (100 + x));
+filterValues['address'] = [...Array(8).keys()].map(x => "Bolivia, Am St " + x);
+filterValues['name'] = [...Array(10).keys()].map(x => "Customer " + (x));
 
 router.get('/data/', function (req, res, next) {
 
-  let top = req.query.$top ? parseInt(req.query.$top): 10;
+  let top = req.query.$top ? parseInt(req.query.$top) : 10;
   let skip = req.query.$skip ? parseInt(req.query.$skip) : 0;
 
   let filter = req.query.$filter;
@@ -59,7 +70,7 @@ router.get('/data/', function (req, res, next) {
   let customers = [];
   let i = 0;
   let limitSearch = allData.length;
-  while ( i < limitSearch) {
+  while (i < limitSearch) {
     let nextValue = allData[i];
     if (containsIn(nextValue, filterArr)) {
       customers.push(nextValue);
@@ -82,7 +93,7 @@ router.get('/data/', function (req, res, next) {
 
     customers.sort((x, y) => {
       let res = 0;
-      for(var k in keyValSort) {
+      for (var k in keyValSort) {
         res = x[k].localeCompare(y[k]);
         if (res != 0) {
           break;
@@ -135,7 +146,7 @@ router.post('/data', function (req, res, next) {
   res.send(nextValue);
 });
 
-function insertFilter(fil, filters){
+function insertFilter(fil, filters) {
   let found = filters.find(x => x == fil);
   if (!found) {
     filters.push(fil);
@@ -151,7 +162,7 @@ router.put('/data/:id', function (req, res, next) {
   insertFilter(found.name, filterValues['name']);
   insertFilter(found.code, filterValues['code']);
   insertFilter(found.address, filterValues['address']);
-  
+
 
   res.send(found);
 });
